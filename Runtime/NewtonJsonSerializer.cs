@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿using Unity.Plastic.Newtonsoft.Json;
 
 namespace JWT
 {
     /// <summary>
     /// JSON Serializer using JavaScriptSerializer
     /// </summary>
-    public class DefaultJsonSerializer : IJsonSerializer
+    public class NewtonJsonSerializer : IJsonSerializer
     {
         /// <summary>
         /// Serialize an object to JSON string
@@ -14,7 +14,7 @@ namespace JWT
         /// <returns>JSON string</returns>
         public string Serialize(object obj)
         {
-            return JsonUtility.ToJson(obj);
+            return JsonConvert.SerializeObject(obj);
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace JWT
         /// <returns>typed object</returns>
         public T Deserialize<T>(string json)
         {
-            return JsonUtility.FromJson<T>(json);
+            return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }
