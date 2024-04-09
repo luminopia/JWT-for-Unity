@@ -4,10 +4,12 @@
     "displayName": "JWT for Unity",
     "description": "Provides functionality to encode and decode JSON Web Tokens (JWTs).",
     "unity": "2019.1",
-    "dependencies": {},
+    "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
+    },
     "author": {
-      "name": "Luminopia",
-      "email": "developers@luminopia.com",
-      "url": "https://www.luminopia.com"
+        "name": "Luminopia",
+        "email": "developers@luminopia.com",
+        "url": "https://www.luminopia.com"
     }
-  }
+}
