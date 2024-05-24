@@ -7,10 +7,13 @@ namespace JWT.Tests
     [TestFixture]
     public class DecodeTests
     {
-        private static readonly Customer Customer = new(firstName: "Bob", age:  37 );
+        private static readonly Customer Customer = new Customer(firstName: "Bob", age: 37);
 
-        private const string TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJGaXJzdE5hbWUiOiJCb2IiLCJBZ2UiOjM3fQ.cr0xw8c_HKzhFBMQrseSPGoJ0NPlRp_3BKzP96jwBdY";
-        private const string MALFORMED_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9eyJGaXJzdE5hbWUiOiJCb2IiLCJBZ2UiOjM3fQ.cr0xw8c_HKzhFBMQrseSPGoJ0NPlRp_3BKzP96jwBdY";
+        private const string TOKEN =
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJGaXJzdE5hbWUiOiJCb2IiLCJBZ2UiOjM3fQ.cr0xw8c_HKzhFBMQrseSPGoJ0NPlRp_3BKzP96jwBdY";
+
+        private const string MALFORMED_TOKEN =
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9eyJGaXJzdE5hbWUiOiJCb2IiLCJBZ2UiOjM3fQ.cr0xw8c_HKzhFBMQrseSPGoJ0NPlRp_3BKzP96jwBdY";
 
         private static readonly IDictionary<string, object> DictionaryPayload = new Dictionary<string, object>
         {
@@ -68,7 +71,8 @@ namespace JWT.Tests
         [Test]
         public void Should_Throw_On_Malformed_Token()
         {
-            Assert.Throws<ArgumentException>(() => JsonWebToken.DecodeToObject<Customer>(MALFORMED_TOKEN, "ABC", false));
+            Assert.Throws<ArgumentException>(() =>
+                JsonWebToken.DecodeToObject<Customer>(MALFORMED_TOKEN, "ABC", false));
         }
 
         [Test]
@@ -76,7 +80,8 @@ namespace JWT.Tests
         {
             string invalidkey = "XYZ";
 
-            Assert.Throws<SignatureVerificationException>(() => JsonWebToken.DecodeToObject<Customer>(TOKEN, invalidkey, true));
+            Assert.Throws<SignatureVerificationException>(() =>
+                JsonWebToken.DecodeToObject<Customer>(TOKEN, invalidkey, true));
         }
 
         [Test]
@@ -84,7 +89,8 @@ namespace JWT.Tests
         {
             var invalidexptoken = JsonWebToken.Encode(new { exp = "asdsad" }, "ABC", JwtHashAlgorithm.HS256);
 
-            Assert.Throws<SignatureVerificationException>(() => JsonWebToken.DecodeToObject<Customer>(invalidexptoken, "ABC", true));
+            Assert.Throws<SignatureVerificationException>(() =>
+                JsonWebToken.DecodeToObject<Customer>(invalidexptoken, "ABC", true));
         }
 
         [Test]
@@ -95,7 +101,8 @@ namespace JWT.Tests
 
             var invalidexptoken = JsonWebToken.Encode(new { exp = unixTimestamp }, "ABC", JwtHashAlgorithm.HS256);
 
-            Assert.Throws<SignatureVerificationException>(() => JsonWebToken.DecodeToObject<Customer>(invalidexptoken, "ABC", true));
+            Assert.Throws<SignatureVerificationException>(() =>
+                JsonWebToken.DecodeToObject<Customer>(invalidexptoken, "ABC", true));
         }
     }
 
@@ -104,7 +111,7 @@ namespace JWT.Tests
         public string FirstName { get; }
 
         public int Age { get; }
-        
+
         public Customer(string firstName, int age)
         {
             FirstName = firstName;
@@ -116,11 +123,6 @@ namespace JWT.Tests
             return obj is Customer customer &&
                    FirstName == customer.FirstName &&
                    Age == customer.Age;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(FirstName, Age);
         }
     }
 }

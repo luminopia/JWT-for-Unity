@@ -1,6 +1,6 @@
 {
     "name": "com.luminopia.jwt-for-unity",
-    "version": "0.1.0",
+    "version": "1.0.1",
     "displayName": "JWT for Unity",
     "description": "Provides functionality to encode and decode JSON Web Tokens (JWTs).",
     "unity": "2019.1",
